@@ -7,38 +7,29 @@ function sort(array) {
   const midPoint = Math.floor(array.length / 2);
   const leftSide = array.slice(0, midPoint);
   const rightSide = array.slice(midPoint, array.length);
-  console.log(`The leftside is ${leftSide} and the rightside is ${rightSide}`);
 
   return merge(sort(leftSide), sort(rightSide));
 }
 
 function merge(left, right) {
-  console.log("---------------------------");
-  console.log("MERGE STARTING!!");
-  console.log(`I'm comparing left:${left} and right:${right}`);
-
+  let lcopy = left.slice();
+  let rcopy = right.slice();
+  let k = [];
   let lid = 0;
   let rid = 0;
 
-  let i = [];
-  let j = [];
-  let k = [];
-
-  for (let n = 0; n < left.length; n++) {
-    if (left[n] < right[n]) {
-      i.push(left[n]);
-      i.push(right[n]); // The issues is here
+  while (lid < lcopy.length && rid < rcopy.length) {
+    if (lcopy[lid] < rcopy[rid]) {
+      k.push(lcopy[lid]);
+      lid += 1;
     } else {
-      i.push(right[n]);
-      i.push(left[n]); // The issues and here
+      k.push(rcopy[rid]);
+      rid += 1;
     }
   }
 
-  // Explaining issue above. This compares two values the second to the list without
-  // comparing it to the OTHER values
-
-  console.log(`Reordered list i is: ${i}`);
-  return i;
+  k = k.concat(lcopy.slice(lid)).concat(rcopy.slice(rid));
+  return k;
 }
 
 console.log(sort([3, 2, 1, 13, 8, 5, 0, 1]));
